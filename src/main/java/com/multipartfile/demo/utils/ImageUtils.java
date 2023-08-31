@@ -1,6 +1,12 @@
 package com.multipartfile.demo.utils;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.ByteArrayOutputStream;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
@@ -46,5 +52,15 @@ public class ImageUtils {
     } catch (Exception ignore) {
     }
     return outputStream.toByteArray();
+  }
+
+  public static String nameConversion(MultipartFile file){
+    LocalDate date = LocalDate.now();
+    LocalTime time = LocalTime.now();
+
+    String tanggal = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    String jam = time.format(DateTimeFormatter.ofPattern("HH-mm-ss"));
+
+    return tanggal + "-" + jam + "-" + Objects.requireNonNull(file.getOriginalFilename()).replaceAll("\\s","-");
   }
 }
